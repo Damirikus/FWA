@@ -4,8 +4,7 @@ import edu.school21.cinema.models.User;
 
 import java.util.Map;
 
-public interface UserService {
-    User getUser(String email);
+public interface UserValidator {
 
-    boolean saveUser(User user);
+    Map<String, String> validate(User user);
 }

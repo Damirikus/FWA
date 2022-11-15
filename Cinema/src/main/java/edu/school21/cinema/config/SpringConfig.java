@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 
 import javax.sql.DataSource;
 
@@ -18,6 +19,9 @@ import javax.sql.DataSource;
 @RequiredArgsConstructor
 @PropertySource("classpath:application.properties")
 public class SpringConfig {
+
+    @Value("${recaptcha.secret}") //секретный код получили при создании капчи
+    public String captchaSecret;
 
     @Value("${db.url}")
     private String dbUrl;
@@ -49,6 +53,16 @@ public class SpringConfig {
     @Bean
     public JdbcTemplate jdbcTemplate(){
         return new JdbcTemplate(dataSource());
+    }
+
+    @Bean
+    public RestTemplate getRestTemplate(){ //для упрощенной работы с рест апи??
+        return new RestTemplate();
+    }
+
+    @Bean
+    public String getCaptchaSecret(){
+        return captchaSecret;
     }
 
 }

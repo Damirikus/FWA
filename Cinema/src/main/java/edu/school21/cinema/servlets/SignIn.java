@@ -30,7 +30,7 @@ public class SignIn extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-        request.getRequestDispatcher("/WEB-INF/templates/signin.html").include(request, response);
+        request.getRequestDispatcher("/WEB-INF/templates/jsp/signin.jsp").include(request, response);
     }
 
     @Override
@@ -39,17 +39,20 @@ public class SignIn extends HttpServlet {
         String password = request.getParameter("password");
 
         User user = userService.getUser(email);
-        if (user != null && passwordEncoder.matches(password, user.getPassword())){
-            // 1.create session
-            // 2. redirect to in
-            System.out.println("in");
+
+        if (user == null){
+            request.setAttribute("error", "User is not exist!");
+            doGet(request, response);
+            return;
+        }
+        if (!passwordEncoder.matches(password, user.getPassword())){
+            request.setAttribute("error", "Bad password!");
+            doGet(request, response);
             return;
         }
 
-
-        doGet(request, response);
-        System.out.println("red");
-        // 3. redirect to doGet
-
+        HttpSession session = request.getSession();
+        session.setAttribute("currentUser", user.getId());
+        response.sendRedirect("/in");
     }
 }

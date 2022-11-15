@@ -16,6 +16,8 @@ public class UserRepository {
     }
 
     public User findUserByEmail(String email){
+
+        // todo переделать запрос, чтобы доставать и роли
         return jdbcTemplate.query("select * from usr where email=?", new UserMapper(), email)
                 .stream().findAny().orElse(null);
     }
