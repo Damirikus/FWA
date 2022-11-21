@@ -18,7 +18,6 @@ public class User {
     private String password;
     private String activationCode;
     private boolean active;
-    private Set<Role> roles;
 
     public User() {
     }

@@ -12,10 +12,15 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 
 @WebServlet(name = "Main", value = "/main")
-public class Main extends HttpServlet {
+public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        if (request.getSession().getAttribute("currentUser") != null){
+            response.sendRedirect("/inner");
+            System.out.println("main redirect in");
+            return;
+        }
+        System.out.println("main main");
         request.getRequestDispatcher("/WEB-INF/templates/html/main.html").include(request, response);
     }
 

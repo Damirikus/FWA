@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 import java.util.Enumeration;
 
 @WebServlet(name = "SignIn", value = "/signin")
-public class SignIn extends HttpServlet {
+public class SignInServlet extends HttpServlet {
 
     private UserService userService;
     private PasswordEncoder passwordEncoder;
@@ -29,7 +29,16 @@ public class SignIn extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
+
+        System.out.println("doGet SignInServlet");
+        if (request.getSession().getAttribute("currentUser") != null){
+            Long id = (Long) request.getSession().getAttribute("currentUser");
+            System.out.println("IDDDDDDDD "+ id);
+            response.sendRedirect("/inner");
+            return;
+        }
+        Long id = (Long) request.getSession().getAttribute("currentUser");
+        System.out.println("IDDDDDDDD "+ id);
         request.getRequestDispatcher("/WEB-INF/templates/jsp/signin.jsp").include(request, response);
     }
 
@@ -53,6 +62,9 @@ public class SignIn extends HttpServlet {
 
         HttpSession session = request.getSession();
         session.setAttribute("currentUser", user.getId());
-        response.sendRedirect("/in");
+
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("/inner");
+//        dispatcher.forward(request, response);
+        response.sendRedirect("/inner");
     }
 }

@@ -20,13 +20,12 @@ import java.util.Collections;
 import java.util.Map;
 
 @WebServlet(name = "SignUp", value = "/signup")
-public class SignUp extends HttpServlet {
+public class SignUpServlet extends HttpServlet {
 
     private final static String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
 
     private RestTemplate restTemplate;
     private UserService userService;
-    private PasswordEncoder passwordEncoder;
     private UserValidator validator;
     private String captchaSecret;
 
@@ -35,7 +34,6 @@ public class SignUp extends HttpServlet {
         ServletContext context = config.getServletContext();
         ApplicationContext springContext = (ApplicationContext) context.getAttribute("springContext");
         this.userService = springContext.getBean(UserService.class);
-        this.passwordEncoder = springContext.getBean(PasswordEncoder.class);
         this.validator = springContext.getBean(UserValidator.class);
         this.restTemplate = springContext.getBean(RestTemplate.class);
         this.captchaSecret = springContext.getBean(String.class);
@@ -43,6 +41,10 @@ public class SignUp extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getSession().getAttribute("currentUser") != null){
+            response.sendRedirect("/inner");
+            return;
+        }
         request.getRequestDispatcher("/WEB-INF/templates/jsp/signup.jsp").include(request, response);
     }
 
@@ -58,7 +60,6 @@ public class SignUp extends HttpServlet {
         String password2 = request.getParameter("password2");
         String captchaResponse = request.getParameter("g-recaptcha-response");
 
-        System.out.println("CAPTHA" + captchaSecret);
 
         String url = String.format(CAPTCHA_URL, captchaSecret, captchaResponse);
         CaptchaResponseDto res = restTemplate.postForObject(url, Collections.emptyList(), CaptchaResponseDto.class);
@@ -76,7 +77,7 @@ public class SignUp extends HttpServlet {
 
         Map<String, String> errors = validator.validate(user);
 
-        if (errors != null){
+        if (!errors.isEmpty()){
             for (String key : errors.keySet()){
                 request.setAttribute(key, errors.get(key));
             }
@@ -84,7 +85,11 @@ public class SignUp extends HttpServlet {
             return;
         }
 
-        userService.saveUser(user);
+        if (!userService.saveUser(user)){
+            errors.put("emailError", "User already exist!");
+            doGet(request, response);
+            return;
+        }
         response.sendRedirect("/signin");
 
     }
