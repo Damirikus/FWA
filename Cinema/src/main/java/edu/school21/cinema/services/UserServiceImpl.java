@@ -1,11 +1,15 @@
 package edu.school21.cinema.services;
 
+import edu.school21.cinema.models.ImageInfo;
+import edu.school21.cinema.models.SessionData;
 import edu.school21.cinema.models.User;
 import edu.school21.cinema.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -22,7 +26,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(String email) {
-        return repository.findUserByEmail(email);
+
+       User user = repository.findUserByEmail(email);
+        if (user != null){
+            user.setImageInfos(repository.getImageInfoList(user.getId()));
+            user.setSessionDataList(repository.getSessionDataList(user.getId()));
+        }
+        return user;
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return repository.findUserById(id);
     }
 
     @Override
@@ -34,6 +49,11 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         repository.add(user);
         return true;
+    }
+
+    @Override
+    public void saveSessionData(SessionData data) {
+        repository.add(data);
     }
 
 }

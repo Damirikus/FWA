@@ -2,12 +2,15 @@ package edu.school21.cinema.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     private Long id;
@@ -16,11 +19,9 @@ public class User {
     private String phone;
     private String email;
     private String password;
-    private String activationCode;
     private boolean active;
-
-    public User() {
-    }
+    private List<SessionData> sessionDataList;
+    private List<ImageInfo> imageInfos;
 
     @Override
     public boolean equals(Object o) {

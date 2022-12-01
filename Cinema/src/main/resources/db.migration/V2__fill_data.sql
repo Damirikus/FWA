@@ -1,3 +1,3 @@
-insert into usr (id, email, password, active) values (1, 'admin', '12345', true);
+insert into usr (email, password, active) values ('admin', '12345', true);
 
 

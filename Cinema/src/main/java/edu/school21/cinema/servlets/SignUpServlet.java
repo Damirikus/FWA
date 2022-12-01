@@ -42,7 +42,7 @@ public class SignUpServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getSession().getAttribute("currentUser") != null){
-            response.sendRedirect("/inner");
+            response.sendRedirect("/profile");
             return;
         }
         request.getRequestDispatcher("/WEB-INF/templates/jsp/signup.jsp").include(request, response);

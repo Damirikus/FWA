@@ -1,5 +1,6 @@
 package edu.school21.cinema.servlets;
 
+import edu.school21.cinema.models.SessionData;
 import edu.school21.cinema.models.User;
 import edu.school21.cinema.services.UserService;
 import edu.school21.cinema.services.UserServiceImpl;
@@ -11,6 +12,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.util.Enumeration;
 
 @WebServlet(name = "SignIn", value = "/signin")
@@ -30,15 +32,10 @@ public class SignInServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        System.out.println("doGet SignInServlet");
         if (request.getSession().getAttribute("currentUser") != null){
-            Long id = (Long) request.getSession().getAttribute("currentUser");
-            System.out.println("IDDDDDDDD "+ id);
-            response.sendRedirect("/inner");
+            response.sendRedirect("/profile");
             return;
         }
-        Long id = (Long) request.getSession().getAttribute("currentUser");
-        System.out.println("IDDDDDDDD "+ id);
         request.getRequestDispatcher("/WEB-INF/templates/jsp/signin.jsp").include(request, response);
     }
 
@@ -61,10 +58,18 @@ public class SignInServlet extends HttpServlet {
         }
 
         HttpSession session = request.getSession();
-        session.setAttribute("currentUser", user.getId());
 
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("/inner");
-//        dispatcher.forward(request, response);
-        response.sendRedirect("/inner");
+        String ipAddress = request.getHeader("X-FORWARDED-FOR");
+        if (ipAddress == null) {
+            ipAddress = request.getRemoteAddr();
+        }
+
+        SessionData data = new SessionData(user.getId(), LocalDateTime.now(), ipAddress);
+        userService.saveSessionData(data);
+        user.getSessionDataList().add(data);
+
+        session.setAttribute("currentUser", user);
+
+        response.sendRedirect("/profile");
     }
 }
