@@ -12,7 +12,7 @@
 
 <img class="mb-4" src="cinema.png" alt="">
 <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-<form action="/signin" method="post">
+<form action="${pageContext.request.contextPath}" method="post">
     <div class="form-floating">
         <input type="text" name="email" class="form-control" placeholder="Email" id="floatingInput"/>
         <label for="floatingInput">Username</label>

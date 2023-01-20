@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
 import javax.sql.DataSource;
+import java.util.concurrent.atomic.DoubleAccumulator;
 
 @Configuration
 @ComponentScan("edu.school21.cinema")
@@ -22,6 +23,9 @@ public class SpringConfig {
 
     @Value("${recaptcha.secret}") //секретный код получили при создании капчи
     public String captchaSecret;
+
+    @Value("${upload.path}")
+    public String pathToSave;
 
     @Value("${db.url}")
     private String dbUrl;

@@ -1,5 +1,6 @@
 package edu.school21.cinema.services;
 
+import edu.school21.cinema.models.ImageInfo;
 import edu.school21.cinema.models.SessionData;
 import edu.school21.cinema.models.User;
 
@@ -13,4 +14,6 @@ public interface UserService {
     boolean saveUser(User user);
 
     void saveSessionData(SessionData data);
+
+    void addImageInfo(ImageInfo imageInfo);
 }

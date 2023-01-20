@@ -56,4 +56,10 @@ public class UserServiceImpl implements UserService {
         repository.add(data);
     }
 
+    @Override
+    public void addImageInfo(ImageInfo imageInfo){
+        repository.add(imageInfo);
+        repository.update(imageInfo.getName(), imageInfo.getUsr_id());
+    }
+
 }

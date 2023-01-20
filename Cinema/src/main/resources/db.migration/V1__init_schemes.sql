@@ -7,7 +7,8 @@ create table usr
     password        varchar(255)    not null,
     name            varchar(255),
     surname         varchar(255),
-    phone           varchar(255)
+    phone           varchar(255),
+    filename        varchar(255)
 );
 
 create table session_data
@@ -18,10 +19,11 @@ create table session_data
     ip varchar(255) not null
 );
 
-create table upload
+create table images
 (
     p_id bigserial primary key ,
     usr_id int8 not null,
+    size int8 not null,
     name varchar(255) not null,
     mime varchar(255) not null
 );

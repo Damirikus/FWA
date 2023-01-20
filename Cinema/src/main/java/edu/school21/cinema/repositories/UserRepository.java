@@ -32,7 +32,7 @@ public class UserRepository {
     }
 
     public List<ImageInfo> getImageInfoList(Long usr_id){
-        String sql = "select * from upload where usr_id=?";
+        String sql = "select * from images where usr_id=?";
         return jdbcTemplate.query(
                 sql, new BeanPropertyRowMapper<>(ImageInfo.class), usr_id);
     }
@@ -59,7 +59,11 @@ public class UserRepository {
     }
 
     public void add(ImageInfo imageInfo){
-        jdbcTemplate.update("insert into upload (usr_id, name, mime) values (?, ?, ?)",
-                imageInfo.getUsr_id(), imageInfo.getName(), imageInfo.getMime());
+        jdbcTemplate.update("insert into images (usr_id, name, mime, size) values (?, ?, ?, ?)",
+                imageInfo.getUsr_id(), imageInfo.getName(), imageInfo.getMime(), imageInfo.getSize());
+    }
+
+    public void update(String filename, Long id){
+        jdbcTemplate.update("update usr set filename=? where usr_id=?", filename, id);
     }
 }

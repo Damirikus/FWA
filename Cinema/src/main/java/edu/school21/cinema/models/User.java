@@ -20,6 +20,7 @@ public class User {
     private String email;
     private String password;
     private boolean active;
+    private String filename;
     private List<SessionData> sessionDataList;
     private List<ImageInfo> imageInfos;
 

@@ -75,14 +75,7 @@
 <div class="container">
     <div class="main-body">
 
-        <!-- Breadcrumb -->
-        <nav aria-label="breadcrumb" class="main-breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
-                <li class="breadcrumb-item active" aria-current="page">User Profile</li>
-            </ol>
-        </nav>
+
         <!-- /Breadcrumb -->
         <% User user = (User) request.getSession().getAttribute("currentUser"); %>
         <div class="row gutters-sm">
@@ -90,16 +83,25 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="200">
-                            <form action="/messages" method="post" enctype="multipart/form-data">
 
-                            </form>
+                            <% String filename = user.getFilename();
+                                System.out.println("name - " + filename);
+                                if (filename == null){
+                                    filename = "https://bootdey.com/img/Content/avatar/avatar7.png";
+                                }
+                            %>
+
+                            <img src="images/<%=filename%>" alt="Admin" class="rounded-circle" width="200">
+
                             <div class="mt-3">
                                 <h4><%= user.getName() + "" + user.getSurname() %></h4>
                                 <p class="text-secondary mb-1">Full Stack Developer</p>
                                 <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
-
                             </div>
+                            <form action="${pageContext.request.contextPath}/profile" method="post" enctype="multipart/form-data">
+                                <input type="file" id="file" name="file">
+                                <input type="submit" value="Upload">
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -167,11 +169,11 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <a class="btn btn-info" href="">Edit</a>
-                            </div>
-                        </div>
+<%--                        <div class="row">--%>
+<%--                            <div class="col-sm-12">--%>
+<%--                                <a class="btn btn-info" href="">Edit</a>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
                     </div>
                 </div>
                 <br>

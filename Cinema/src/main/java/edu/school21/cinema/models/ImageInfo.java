@@ -13,4 +13,5 @@ public class ImageInfo {
     private Long usr_id;
     private String name;
     private String mime;
+    private Long size;
 }
