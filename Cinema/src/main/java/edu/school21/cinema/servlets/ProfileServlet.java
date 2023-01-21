@@ -69,6 +69,7 @@ public class ProfileServlet extends HttpServlet {
                 }
             } catch (Exception e){
                 e.printStackTrace();
+                response.sendRedirect("/profile");
             }
 
             User currentUser = (User) request.getSession().getAttribute("currentUser");

@@ -24,40 +24,35 @@
 
 
 <body>
-
+<% User user = (User) request.getSession().getAttribute("currentUser"); %>
 <header>
     <div class="px-3 py-2 bg-dark text-white">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-                    <img src="abs.png" width="80" height="80" alt=""><use xlink:href="#bootstrap"></use></img>
-                    <span >BOB</span>
-                    <!--                        </div>-->
+                <a href="/profile" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                    <img src="static/cinema.png" width="80" height="80" alt="">
+                    <span ><%= user.getName()%></span>
                 </a>
 
                 <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                     <li>
-                        <a href="/messages" class="nav-link text-secondary">
-                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="/messages"></use></svg>
+                        <a href="/profile" class="nav-link text-secondary">
+                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"></svg>
                             Home
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white">
-                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"></use></svg>
+                        <a href="/profile" class="nav-link text-white">
+                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"></svg>
                             Dashboard
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white">
-                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#table"></use></svg>
+                        <a href="/profile" class="nav-link text-white">
+                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"></svg>
                             Orders
                         </a>
                     </li>
-
-
-
-
                 </ul>
             </div>
         </div>
@@ -74,10 +69,7 @@
 
 <div class="container">
     <div class="main-body">
-
-
         <!-- /Breadcrumb -->
-        <% User user = (User) request.getSession().getAttribute("currentUser"); %>
         <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
                 <div class="card">
@@ -91,7 +83,7 @@
                                 }
                             %>
 
-                            <img src="images/<%=filename%>" alt="Admin" class="rounded-circle" width="200">
+                            <img src="images/<%=filename%>" alt="Admin" class="rounded-circle" width="240">
 
                             <div class="mt-3">
                                 <h4><%= user.getName() + "" + user.getSurname() %></h4>

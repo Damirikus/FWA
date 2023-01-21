@@ -10,7 +10,7 @@
 
 <body class="text-center mt-5">
 
-<img class="mb-4" src="cinema.png" alt="">
+<img class="mb-4" src="static/camera.png" alt="" height="160" width="160">
 <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 <form action="${pageContext.request.contextPath}" method="post">
     <div class="form-floating">
@@ -27,10 +27,10 @@
         </label>
     </div>
     <!--    <div><input type="submit" value="Sign In"/></div>-->
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <button class="w-100 btn btn-lg btn-dark" type="submit">Sign in</button>
     <br/>
     <br/>
-    <a type="button" class="w-100 btn btn-lg btn-primary" href="/signup">Registration</a>
+    <a type="button" class="w-100 btn btn-lg btn-dark" href="/signup">Registration</a>
     <div>
         <td><%= request.getAttribute("error") == null ? "" : request.getAttribute("error") %></td>
     </div>
