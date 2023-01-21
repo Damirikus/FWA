@@ -4,23 +4,24 @@ import edu.school21.cinema.config.SpringConfig;
 import edu.school21.cinema.models.ImageInfo;
 import edu.school21.cinema.models.User;
 import edu.school21.cinema.services.UserService;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.context.ApplicationContext;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
-
-import java.io.*;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.UUID;
 
 @WebServlet(name = "Profile", value = "/profile")
@@ -63,7 +64,6 @@ public class ProfileServlet extends HttpServlet {
 
             try (OutputStream outputStream = new FileOutputStream(path);
                  InputStream fileContent = filePart.getInputStream()) {
-
                 while (fileContent.available() > 0){
                     outputStream.write(fileContent.read());
                 }

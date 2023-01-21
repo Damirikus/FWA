@@ -1,7 +1,8 @@
 <%@ page import="edu.school21.cinema.models.User" %>
 <%@ page import="edu.school21.cinema.models.SessionData" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
-<%@ page import="java.util.Locale" %><%--
+<%@ page import="java.util.Locale" %>
+<%@ page import="edu.school21.cinema.models.ImageInfo" %><%--
   Created by IntelliJ IDEA.
   User: damirikus
   Date: 21.11.2022
@@ -63,6 +64,10 @@
                 <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
             </form>
 
+            <div class="text-end">
+                <a href="/logout" class="btn btn-light text-dark me-2">Sign Out</a>
+            </div>
+
         </div>
     </div>
 </header>
@@ -91,7 +96,7 @@
                                 <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
                             </div>
                             <form action="${pageContext.request.contextPath}/profile" method="post" enctype="multipart/form-data">
-                                <input type="file" id="file" name="file">
+                                <input type="file" id="file" name="file" value="Choose file">
                                 <input type="submit" value="Upload">
                             </form>
                         </div>
@@ -160,20 +165,11 @@
                                 <%= user.getEmail()%>
                             </div>
                         </div>
-                        <hr>
-<%--                        <div class="row">--%>
-<%--                            <div class="col-sm-12">--%>
-<%--                                <a class="btn btn-info" href="">Edit</a>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
                     </div>
                 </div>
                 <br>
                 <div class="row gutters-sm">
                     <div class="col-sm-6 mb-3">
-                        <div class="card h-100">
-
-
                             <table class="table">
                                 <thead>
                                 <tr>
@@ -199,8 +195,44 @@
                                         }
                                     %>
                             </table>
+                        <br>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">File name</th>
+                                    <th scope="col">Size</th>
+                                    <th scope="col">MIME</th>
+                                </tr>
+                                </thead>
+                                <%
+                                    int c = 0;
+                                    String[] units = { "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 
-                        </div>
+                                    for (int i = user.getImageInfos().size() - 1; i >= 0;  i--){
+                                        if (c == 10){
+                                            break;
+                                        }
+
+                                        ImageInfo imageInfo = user.getImageInfos().get(i);
+
+                                        int unit = 0;
+                                        long size = imageInfo.getSize();
+
+                                        while(size >= 1024) {
+                                            size /= 1024;
+                                            ++unit;
+                                        }
+
+                                        out.println("<tbody><tr>");
+                                        out.println("<td>" + imageInfo.getName() + "</td>");
+                                        out.println("<td>" + String.format("%s %s", size, units[unit]) + "</td>");
+                                        out.println("<td>" + imageInfo.getMime() + "</td>");
+                                        out.println("</tr></tbody>");
+                                        c++;
+                                    }
+
+                                %>
+                            </table>
                     </div>
                 </div>
             </div>
