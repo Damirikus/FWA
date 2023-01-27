@@ -86,19 +86,23 @@
                                 if (filename == null){
                                     filename = "https://bootdey.com/img/Content/avatar/avatar7.png";
                                 }
+                                request.setAttribute("currentUser", request.getSession().getAttribute("currentUser"));
+
                             %>
 
-                            <img src="images/<%=filename%>" alt="Admin" class="rounded-circle" width="240">
+                            <img src="http://localhost:8080/images/${currentUser.getFilename()}" class="rounded-circle" width="240" alt="">
 
                             <div class="mt-3">
                                 <h4><%= user.getName() + "" + user.getSurname() %></h4>
                                 <p class="text-secondary mb-1">Full Stack Developer</p>
                                 <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
                             </div>
+
                             <form action="${pageContext.request.contextPath}/profile" method="post" enctype="multipart/form-data">
-                                <input type="file" id="file" name="file" value="Choose file">
+                                <input type="file" id="file" name="file">
                                 <input type="submit" value="Upload">
                             </form>
+
                         </div>
                     </div>
                 </div>
