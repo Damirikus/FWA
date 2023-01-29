@@ -139,18 +139,28 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.1</version>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven2-plugin</artifactId>
-                <version>1.7.6</version>
+                <version>1.8.5</version>
                 <configuration>
                     <container>
                         <containerId>tomcat9x</containerId>
-                        <type>embedded</type>
+                        <home>${env.HOME}/Desktop/apache-tomcat-9.0.68</home>
+                        <type>installed</type>
                     </container>
+                    <configuration>
+                        <type>standalone</type>
+                        <home>target/tomcat9x</home>
+                    </configuration>
                     <deployables>
                         <deployable>
                             <type>war</type>
-                            <location>target/Cinema-1.0-SNAPSHOT.war</location>
+                            <location>${env.HOME}/.m2/repository/edu/school21/cinema/Cinema/1.0-SNAPSHOT/Cinema-1.0-SNAPSHOT.war</location>
                             <properties>
                                 <context>/</context>
                             </properties>
