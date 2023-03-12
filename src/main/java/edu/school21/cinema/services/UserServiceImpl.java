@@ -37,7 +37,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long id) {
-        return repository.findUserById(id);
+        User user = repository.findUserById(id);
+        if (user != null){
+            user.setImageInfos(repository.getImageInfoList(user.getId()));
+            user.setSessionDataList(repository.getSessionDataList(user.getId()));
+        }
+        return user;
     }
 
     @Override

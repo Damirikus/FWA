@@ -1,7 +1,8 @@
+drop table if exists usr, session_data, images;
 
 create table usr
 (
-    usr_id          bigserial primary key ,
+    usr_id          bigserial primary key,
     active          boolean         not null,
     email           varchar(255)    not null,
     password        varchar(255)    not null,

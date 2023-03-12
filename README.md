@@ -1,2 +1,3 @@
 # FWA
-Java EE
+
+mvn clean package cargo:run

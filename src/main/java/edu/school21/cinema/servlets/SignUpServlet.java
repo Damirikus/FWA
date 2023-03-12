@@ -1,5 +1,6 @@
 package edu.school21.cinema.servlets;
 
+import edu.school21.cinema.config.SpringConfig;
 import edu.school21.cinema.models.User;
 import edu.school21.cinema.models.dto.CaptchaResponseDto;
 import edu.school21.cinema.services.UserService;
@@ -30,13 +31,14 @@ public class SignUpServlet extends HttpServlet {
     private String captchaSecret;
 
     @Override
-    public void init (ServletConfig config ) throws ServletException {
+    public void init (ServletConfig config ) {
         ServletContext context = config.getServletContext();
         ApplicationContext springContext = (ApplicationContext) context.getAttribute("springContext");
         this.userService = springContext.getBean(UserService.class);
         this.validator = springContext.getBean(UserValidator.class);
         this.restTemplate = springContext.getBean(RestTemplate.class);
-        this.captchaSecret = springContext.getBean(String.class);
+        SpringConfig springConfig = springContext.getBean(SpringConfig.class);
+        this.captchaSecret = springConfig.captchaSecret;
     }
 
     @Override

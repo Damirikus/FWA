@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.DoubleAccumulator;
 @PropertySource("classpath:application.properties")
 public class SpringConfig {
 
-    @Value("${recaptcha.secret}") //секретный код получили при создании капчи
+    @Value("${recaptcha.secret}")
     public String captchaSecret;
 
     @Value("${upload.path}")

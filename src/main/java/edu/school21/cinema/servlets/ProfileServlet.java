@@ -30,7 +30,7 @@ public class ProfileServlet extends HttpServlet {
     private SpringConfig config;
 
     @Override
-    public void init (ServletConfig config ) throws ServletException {
+    public void init (ServletConfig config ) {
         ServletContext context = config.getServletContext();
         ApplicationContext springContext = (ApplicationContext) context.getAttribute("springContext");
         this.userService = springContext.getBean(UserService.class);
@@ -77,9 +77,9 @@ public class ProfileServlet extends HttpServlet {
             imageInfo.setMime("images/" + FilenameUtils.getExtension(path));
             userService.addImageInfo(imageInfo);
 
-            currentUser.setFilename(fileName);
+            User updatedUser = userService.getUserById(currentUser.getId());
 
-            request.getSession().setAttribute("currentUser", currentUser);
+            request.getSession().setAttribute("currentUser", updatedUser);
 
             response.sendRedirect("/profile");
         } catch (IOException | ServletException e) {
