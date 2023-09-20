@@ -5,17 +5,17 @@ import edu.school21.cinema.models.User;
 import edu.school21.cinema.models.dto.CaptchaResponseDto;
 import edu.school21.cinema.services.UserService;
 import edu.school21.cinema.services.UserValidator;
-import edu.school21.cinema.services.UserValidatorImpl;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 import org.thymeleaf.util.StringUtils;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -23,7 +23,7 @@ import java.util.Map;
 @WebServlet(name = "SignUp", value = "/signup")
 public class SignUpServlet extends HttpServlet {
 
-    private final static String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
+    private static final String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
 
     private RestTemplate restTemplate;
     private UserService userService;

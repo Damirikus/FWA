@@ -13,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
 import javax.sql.DataSource;
-import java.util.concurrent.atomic.DoubleAccumulator;
 
 @Configuration
 @ComponentScan("edu.school21.cinema")

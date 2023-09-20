@@ -20,14 +20,14 @@ public class ImageServlet extends HttpServlet {
     private SpringConfig config;
 
     @Override
-    public void init (ServletConfig config ) throws ServletException {
+    public void init (ServletConfig config ) {
         ServletContext context = config.getServletContext();
         ApplicationContext springContext = (ApplicationContext) context.getAttribute("springContext");
         this.config = springContext.getBean(SpringConfig.class);
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String filename = request.getHttpServletMapping().getMatchValue();
         String path = config.pathToSave + "/" + filename;
         ServletOutputStream out = response.getOutputStream();

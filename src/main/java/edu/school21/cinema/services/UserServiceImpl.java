@@ -5,12 +5,8 @@ import edu.school21.cinema.models.SessionData;
 import edu.school21.cinema.models.User;
 import edu.school21.cinema.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {

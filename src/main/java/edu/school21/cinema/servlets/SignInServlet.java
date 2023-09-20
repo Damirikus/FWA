@@ -3,17 +3,19 @@ package edu.school21.cinema.servlets;
 import edu.school21.cinema.models.SessionData;
 import edu.school21.cinema.models.User;
 import edu.school21.cinema.services.UserService;
-import edu.school21.cinema.services.UserServiceImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDateTime;
-import java.util.Enumeration;
 
 @WebServlet(name = "SignIn", value = "/signin")
 public class SignInServlet extends HttpServlet {
@@ -22,7 +24,7 @@ public class SignInServlet extends HttpServlet {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public void init (ServletConfig config ) throws ServletException {
+    public void init (ServletConfig config ) {
         ServletContext context = config.getServletContext();
         ApplicationContext springContext = (ApplicationContext) context.getAttribute("springContext");
         this.userService = springContext.getBean(UserService.class);
